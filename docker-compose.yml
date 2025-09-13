@@ -1,0 +1,31 @@
+version: '3.9'
+
+services:
+  postgres_db:
+    image: postgres:15
+    container_name: my_arthtrack_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: prafull           # change to your DB user
+      POSTGRES_PASSWORD: "@rth25!"     # change to a strong password
+      POSTGRES_DB: arthtrack           # your project DB
+    ports:
+      - "9090:5432"                    # expose DB to host
+    volumes:
+      - /Users/prafullashekhar/Coding/Java Projects/ArthtrackDB/postgres:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: arthtrack_pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@arthtrack.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "9091:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+volumes:
+  postgres_data:
+  pgadmin-data:
