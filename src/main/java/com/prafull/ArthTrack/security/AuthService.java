@@ -1,7 +1,5 @@
 package com.prafull.ArthTrack.security;
 
-import java.time.LocalDateTime;
-
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -41,7 +39,7 @@ public class AuthService {
         User user = (User) authentication.getPrincipal();
         String token = authUtil.generateToken(user);
 
-        return new LoginResponseModel(token, user.getId().toString());
+        return new LoginResponseModel(token, user.getUserId().toString());
     }
 
 
@@ -57,11 +55,9 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(signUpRequestModel.getPassword()));
         user.setEmail(signUpRequestModel.getEmail());
         user.setName(signUpRequestModel.getName());
-        user.setCreatedAt(LocalDateTime.now().toString());
-        user.setUpdatedAt(LocalDateTime.now().toString());
         userRepository.save(user);
 
         String token = authUtil.generateToken(user);
-        return new SignUpResponseModel(token, user.getId().toString(), user.getUsername(), user.getName());
+        return new SignUpResponseModel(token, user.getUserId().toString(), user.getUsername(), user.getName());
     }
 }
