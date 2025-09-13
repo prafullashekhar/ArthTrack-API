@@ -52,6 +52,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 
+                // ✅ Set userId in ThreadLocal for super fast access
+                ThreadLocalUserContext.setCurrentUserId(userId);
+
                 // ✅ Enable Hibernate Filter with userId
                 Session session = entityManager.unwrap(Session.class);
                 session.enableFilter("userFilter").setParameter("userId", userId);
@@ -62,6 +65,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         }catch(Exception e){
             handlerExceptionResolver.resolveException(request, response, null, e);
         }finally {
+            // ✅ Clear ThreadLocal to prevent memory leaks
+            ThreadLocalUserContext.clear();
+            
             Session session = entityManager.unwrap(Session.class);
             if (session.isOpen()) {
                 session.disableFilter("userFilter");
