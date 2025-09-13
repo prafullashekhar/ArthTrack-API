@@ -9,6 +9,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import com.prafull.ArthTrack.common.UserScopedEntity;
+
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
@@ -22,13 +24,10 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Payment {  
+public class Payment extends UserScopedEntity {  
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pId;
-
-    @Column(name = "user_id", nullable = false, length = 100)
-    private Long userId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pt_id")
