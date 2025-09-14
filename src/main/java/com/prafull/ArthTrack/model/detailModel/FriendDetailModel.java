@@ -12,5 +12,6 @@ import lombok.AllArgsConstructor;
 public class FriendDetailModel {
     private Long id;
     private String name;
+    private Double amount;
     private RowStatus rowStatus; 
 }

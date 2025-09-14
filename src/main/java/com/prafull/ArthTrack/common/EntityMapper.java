@@ -8,11 +8,14 @@ import org.springframework.stereotype.Component;
 import com.prafull.ArthTrack.domain.entity.Category;
 import com.prafull.ArthTrack.domain.entity.ExpenseType;
 import com.prafull.ArthTrack.domain.entity.Friend;
+import com.prafull.ArthTrack.domain.entity.Payment;
 import com.prafull.ArthTrack.domain.entity.PaymentType;
 import com.prafull.ArthTrack.model.detailModel.CategoryDetailModel;
 import com.prafull.ArthTrack.model.detailModel.ExpenseDetailModel;
 import com.prafull.ArthTrack.model.detailModel.FriendDetailModel;
+import com.prafull.ArthTrack.model.detailModel.PaymentDetailModel;
 import com.prafull.ArthTrack.model.detailModel.PaymentTypeDetailModel;
+import com.prafull.ArthTrack.model.payment.PaymentSummaryModel;
 
 @Component
 public class EntityMapper {
@@ -136,4 +139,61 @@ public class EntityMapper {
         paymentType.setUserId(userId);
         return paymentType;
     }
+
+
+    // converts to paymentDetailModel
+    public PaymentDetailModel toPaymentDetailModel(Payment payment) {
+        if (payment == null) return null;
+
+        PaymentDetailModel model = new PaymentDetailModel();
+        model.setId(payment.getPId());
+        model.setAmount(payment.getAmount());
+        model.setTotalAmount(payment.getTotalAmount());
+
+        model.setPaymentTypeID(payment.getPaymentType().getPtId());
+        model.setPaymentTypeName(payment.getPaymentType().getName());
+
+        model.setExpenseTypeID(payment.getExpenseType().getEtId());
+        model.setExpenseTypeName(payment.getExpenseType().getName());
+
+        model.setCategoryID(payment.getCategory().getCId());
+        model.setCategoryName(payment.getCategory().getName());
+
+        // TODO - set friends list
+
+        model.setPaymentDate(payment.getPaymentDate());
+        model.setComment(payment.getComment());
+
+        return model;
+    }
+
+
+    // converts to paymentSummaryModel
+    public PaymentSummaryModel toPaymentSummaryModel(Payment payment) {
+        if (payment == null) return null;
+
+        PaymentSummaryModel model = new PaymentSummaryModel();
+        model.setId(payment.getPId());
+        model.setAmount(payment.getAmount());
+        model.setTotalAmount(payment.getTotalAmount());
+
+        model.setPaymentTypeID(payment.getPaymentType().getPtId());
+        model.setExpenseTypeID(payment.getExpenseType().getEtId());
+        model.setCategoryID(payment.getCategory().getCId());
+
+        model.setPaymentDate(payment.getPaymentDate());
+        model.setComment(payment.getComment());
+
+        return model;
+    }
+
+    public List<PaymentSummaryModel> toPaymentSummaryModelList(List<Payment> payments) {
+        if (payments == null) return null;
+        
+        return payments.stream()
+            .map(this::toPaymentSummaryModel)
+            .collect(Collectors.toList());
+    }
+
+
 }

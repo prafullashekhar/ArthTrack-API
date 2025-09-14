@@ -16,7 +16,8 @@ public class HibernateFilterAspect {
     private EntityManager entityManager;
 
     @Before("execution(* com.prafull.ArthTrack.service..*(..)) || " +
-        "execution(* org.springframework.data.repository.Repository+.*(..))")
+        "execution(* org.springframework.data.repository.Repository..*(..))")
+        // "execution(* org.springframework.data.repository.Repository+.*(..))")
     public void applyFilter() {
         Long userId = ThreadLocalUserContext.getCurrentUserId();
         if (userId != null) {
