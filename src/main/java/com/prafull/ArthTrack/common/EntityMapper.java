@@ -1,5 +1,6 @@
 package com.prafull.ArthTrack.common;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.prafull.ArthTrack.domain.entity.Category;
 import com.prafull.ArthTrack.domain.entity.ExpenseType;
 import com.prafull.ArthTrack.domain.entity.Friend;
+import com.prafull.ArthTrack.domain.entity.FriendPayment;
 import com.prafull.ArthTrack.domain.entity.Payment;
 import com.prafull.ArthTrack.domain.entity.PaymentType;
 import com.prafull.ArthTrack.model.detailModel.CategoryDetailModel;
@@ -142,7 +144,7 @@ public class EntityMapper {
 
 
     // converts to paymentDetailModel
-    public PaymentDetailModel toPaymentDetailModel(Payment payment) {
+    public PaymentDetailModel toPaymentDetailModel(Payment payment, List<FriendPayment> friendsShare) {
         if (payment == null) return null;
 
         PaymentDetailModel model = new PaymentDetailModel();
@@ -159,7 +161,21 @@ public class EntityMapper {
         model.setCategoryID(payment.getCategory().getCId());
         model.setCategoryName(payment.getCategory().getName());
 
-        // TODO - set friends list
+
+        if(friendsShare != null && friendsShare.size() > 0){
+            List<FriendDetailModel> friendResultList = new ArrayList<>();
+            FriendDetailModel friendModel;
+            for(FriendPayment fp : friendsShare){
+                Friend friend = fp.getFriend();
+                friendModel = new FriendDetailModel();
+                friendModel.setId(friend.getFId());
+                friendModel.setName(friend.getName());
+                friendModel.setAmount(fp.getAmount());
+                friendResultList.add(friendModel);
+            }
+            model.setFriends(friendResultList);
+        }
+        
 
         model.setPaymentDate(payment.getPaymentDate());
         model.setComment(payment.getComment());

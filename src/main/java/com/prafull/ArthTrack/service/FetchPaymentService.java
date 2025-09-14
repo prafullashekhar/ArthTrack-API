@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.prafull.ArthTrack.common.EntityMapper;
+import com.prafull.ArthTrack.domain.entity.FriendPayment;
 import com.prafull.ArthTrack.domain.entity.Payment;
+import com.prafull.ArthTrack.domain.jpaRepository.FriendPaymentRepository;
 import com.prafull.ArthTrack.domain.jpaRepository.PaymentRepository;
 import com.prafull.ArthTrack.exception.ValidationException;
 import com.prafull.ArthTrack.model.detailModel.PaymentDetailModel;
@@ -21,6 +23,7 @@ public class FetchPaymentService {
 
     private final PaymentRepository paymentRepository;
     private final EntityMapper entityMapper;
+    private final FriendPaymentRepository friendPaymentRepository;
 
     public PaymentDetailModel getPaymentDetail(PaymentRequestModel request) {
 
@@ -28,7 +31,8 @@ public class FetchPaymentService {
         if(paymentOptional.isEmpty()){
             throw new ValidationException("No such payment exists");
         }
-        return entityMapper.toPaymentDetailModel(paymentOptional.get());
+        List<FriendPayment> friendsShare = friendPaymentRepository.findByPayment_pId(paymentOptional.get().getPId());
+        return entityMapper.toPaymentDetailModel(paymentOptional.get(), friendsShare);
     }
 
     public List<PaymentSummaryModel> getPayments(PaymentRequestModel request) {

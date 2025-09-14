@@ -3,8 +3,6 @@ package com.prafull.ArthTrack.model.detailModel;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.prafull.ArthTrack.common.RowStatus;
-
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Data;

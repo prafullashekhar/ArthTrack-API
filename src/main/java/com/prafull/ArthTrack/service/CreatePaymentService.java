@@ -19,7 +19,6 @@ import com.prafull.ArthTrack.domain.entity.PaymentType;
 import com.prafull.ArthTrack.domain.entity.ExpenseType;
 import com.prafull.ArthTrack.domain.entity.Friend;
 import com.prafull.ArthTrack.domain.entity.FriendPayment;
-import com.prafull.ArthTrack.common.EntityMapper;
 import com.prafull.ArthTrack.domain.entity.Category;
 import com.prafull.ArthTrack.model.detailModel.FriendDetailModel;
 import com.prafull.ArthTrack.model.detailModel.PaymentDetailModel;
@@ -37,11 +36,10 @@ public class CreatePaymentService {
     private final CategoryRepository categoryRepository;
     private final FriendPaymentRepository friendPaymentRepository;
     private final FriendRepository friendRepository;
-    private final EntityMapper entityMapper;
 
 
     @Transactional
-    public PaymentDetailModel createPayment(PaymentDetailModel request) {
+    public Boolean createPayment(PaymentDetailModel request) {
         Long currentUserId = ThreadLocalUserContext.getCurrentUserId();
 
         // If all the required fields are not present, throw an exception
@@ -77,7 +75,7 @@ public class CreatePaymentService {
             saveExpenseForAllFriends(request, pay);
         }
 
-        return entityMapper.toPaymentDetailModel(pay);
+        return true;
     }
 
     @Transactional

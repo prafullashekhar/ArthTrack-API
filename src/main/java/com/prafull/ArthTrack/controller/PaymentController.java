@@ -24,7 +24,7 @@ public class PaymentController {
     private final FetchPaymentService fetchPaymentService;
 
     @PostMapping("/create")
-    public ResponseEntity<PaymentDetailModel> createPayment(@RequestBody PaymentDetailModel request) {
+    public ResponseEntity<Boolean> createPayment(@RequestBody PaymentDetailModel request) {
         return ResponseEntity.ok(createPaymentService.createPayment(request));
     }
 
