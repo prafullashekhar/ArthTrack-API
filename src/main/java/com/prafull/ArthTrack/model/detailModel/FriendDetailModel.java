@@ -1,5 +1,7 @@
 package com.prafull.ArthTrack.model.detailModel;
 
+import com.prafull.ArthTrack.common.RowStatus;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -10,4 +12,5 @@ import lombok.AllArgsConstructor;
 public class FriendDetailModel {
     private Long id;
     private String name;
+    private RowStatus rowStatus; 
 }

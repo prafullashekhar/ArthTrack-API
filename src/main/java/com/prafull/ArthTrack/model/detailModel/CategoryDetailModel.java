@@ -1,5 +1,7 @@
 package com.prafull.ArthTrack.model.detailModel;
 
+import com.prafull.ArthTrack.common.RowStatus;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -11,4 +13,5 @@ public class CategoryDetailModel {
     private Long id;
     private String name;
     private Long expenseTypeId;
+    private RowStatus rowStatus; 
 }

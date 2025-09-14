@@ -10,6 +10,12 @@ import io.jsonwebtoken.JwtException;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<ApiError> handleValidationException(ValidationException ex) {
+        ApiError apiError = new ApiError(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(apiError, apiError.getStatusCode());
+    }
+
     // Authentication Exceptions
     @ExceptionHandler(LoginException.class)
     public ResponseEntity<ApiError> handleLoginException(LoginException ex) {

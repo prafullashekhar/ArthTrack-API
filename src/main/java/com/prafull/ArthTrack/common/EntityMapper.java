@@ -27,6 +27,7 @@ public class EntityMapper {
         if (category.getExpenseType() != null) {
             model.setExpenseTypeId(category.getExpenseType().getEtId());
         }
+        model.setRowStatus(RowStatus.NO_CHANGE);
         return model;
     }
 
@@ -55,6 +56,7 @@ public class EntityMapper {
         ExpenseDetailModel model = new ExpenseDetailModel();
         model.setId(expenseType.getEtId());
         model.setName(expenseType.getName());
+        model.setRowStatus(RowStatus.NO_CHANGE);
         return model;
     }
 
@@ -83,6 +85,7 @@ public class EntityMapper {
         FriendDetailModel model = new FriendDetailModel();
         model.setId(friend.getFId());
         model.setName(friend.getName());
+        model.setRowStatus(RowStatus.NO_CHANGE);
         return model;
     }
 
@@ -112,6 +115,7 @@ public class EntityMapper {
         PaymentTypeDetailModel model = new PaymentTypeDetailModel();
         model.setId(paymentType.getPtId());
         model.setName(paymentType.getName());
+        model.setRowStatus(RowStatus.NO_CHANGE);
         return model;
     }
 
